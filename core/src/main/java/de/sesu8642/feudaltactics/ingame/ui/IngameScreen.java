@@ -500,6 +500,8 @@ public class IngameScreen extends GameScreen {
 
 		parameterInputStage.playButton
 				.addListener(new ExceptionLoggingChangeListener(() -> eventBus.post(new GameStartEvent())));
+		parameterInputStage.backButton
+				.addListener(new ExceptionLoggingChangeListener(() -> eventBus.post(new ScreenTransitionTriggerEvent(ScreenTransitionTarget.MAIN_MENU_SCREEN))));
 	}
 
 	private void addHudListeners() {

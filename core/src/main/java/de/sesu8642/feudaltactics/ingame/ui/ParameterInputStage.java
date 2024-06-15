@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -54,12 +55,14 @@ public class ParameterInputStage extends ResizableResettableStage {
 	private Skin skin;
 
 	private Table rootTable;
+	private Table buttonTable;
 	SelectBox<String> colorSelect;
 	SelectBox<String> sizeSelect;
 	SelectBox<String> densitySelect;
 	SelectBox<String> difficultySelect;
 	ImageButton randomButton;
 	TextButton playButton;
+	TextButton backButton;
 	TextField seedTextField;
 
 	/**
@@ -109,6 +112,7 @@ public class ParameterInputStage extends ResizableResettableStage {
 		randomButton.getImageCell().expand().fill();
 
 		playButton = new TextButton("Play", skin);
+		backButton = new TextButton("Back", skin);
 
 		/*
 		 * The longest text on the screen is the seed text field. It allows for 18
@@ -119,7 +123,7 @@ public class ParameterInputStage extends ResizableResettableStage {
 		float seedTextFieldWidth = maxSeedNumberWidth * 20;
 
 		rootTable = new Table();
-		rootTable.setFillParent(true);
+		//rootTable.setFillParent(true);
 		rootTable.defaults().left().pad(INPUT_PADDING_PX / 2F, 0, INPUT_PADDING_PX / 2F, 0);
 		rootTable.columnDefaults(0).pad(0, OUTER_PADDING_PX, 0, OUTER_PADDING_PX);
 		rootTable.add().expandY();
@@ -141,10 +145,26 @@ public class ParameterInputStage extends ResizableResettableStage {
 		rootTable.add(seedTextField).minWidth(seedTextFieldWidth);
 		rootTable.add(randomButton).height(Value.percentHeight(1, seedTextField)).width(Value.percentHeight(1))
 				.padLeft(INPUT_PADDING_PX);
-		rootTable.row();
-		rootTable.add(playButton).colspan(4).fillX().pad(INPUT_PADDING_PX / 2F, OUTER_PADDING_PX, OUTER_PADDING_PX,
+
+		buttonTable = new Table();
+		//buttonTable.setFillParent(true);
+		buttonTable.defaults().expandX().fillX().pad(INPUT_PADDING_PX / 2F, 0, INPUT_PADDING_PX / 2F, 0);
+		buttonTable.add(playButton).pad(INPUT_PADDING_PX / 2F, OUTER_PADDING_PX, OUTER_PADDING_PX,
 				OUTER_PADDING_PX);
-		this.addActor(rootTable);
+		buttonTable.add(backButton).pad(INPUT_PADDING_PX / 2F, OUTER_PADDING_PX, OUTER_PADDING_PX,
+				OUTER_PADDING_PX);
+		//this.addActor(buttonTable);
+		
+		VerticalGroup verticalGroup = new VerticalGroup();
+        	verticalGroup.setFillParent(true);
+        	verticalGroup.space(10);
+        	verticalGroup.bottom();
+		verticalGroup.expand();
+		verticalGroup.fill();
+        	this.addActor(verticalGroup);
+
+        	verticalGroup.addActor(rootTable);
+        	verticalGroup.addActor(buttonTable);
 	}
 
 	/**
